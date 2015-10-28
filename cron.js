@@ -4,16 +4,19 @@ var model = require('./model/model.js');
 var Entries = model.Entries;
 
 var CronJob = require('cron').CronJob;
-//var lastUpdate = 0;
-//var temp = 0;
 var urlList = ['http://himasoku.com/index.rdf', 'http://kabooo.net/index.rdf', 'http://alfalfalfa.com/index.rdf', "http://blog.livedoor.jp/news23vip/index.rdf"];
 new CronJob('0 0-45/15 * * * *', function() {
     //過去のエントリーを検索し最新の日時のものより新しい記事を取得する。
     Entries.findOne({}).sort('-publicationDate').exec(function(err, doc) {
-        var lastUpdate = new Date(doc.publicationDate);
+        var lastUpdate;
 
-//        lastUpdate = temp;
-//       temp = new Date();
+        if (doc == null) {
+            lastUpdate = 0;
+        }
+        else {
+            lastUpdate = new Date(doc.publicationDate);
+        }
+
         for (var j = 0; j < urlList.length; j++) {
             (function(j) {
                 console.log('Cron job has started.     ' + new Date() + "     " + urlList[j]);
