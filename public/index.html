@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet prefetch" href="bower_components/OnsenUI/build/css/onsenui.css">
+    <link rel="stylesheet prefetch" href="bower_components/OnsenUI/build/css/onsen-css-components.css">
+    
+    <link rel="stylesheet prefetch" href="./stylesheets/style.css">
+
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/OnsenUI/build/js/onsenui.js"></script>
+    
+    <script src="./javascripts/main.js"></script>
+
+</head>
+
+<body>
+    <ons-page ng-controller="MainController">
+      <ons-toolbar>
+        <div class="center">Entry List</div>
+      </ons-toolbar>
+
+      <ons-list>
+        <ons-list-item ng-repeat='entry in entries' modifier="chevron" class="list-item-container" ng-click="movetoEntry($index)">
+          <ons-row>
+<!--            <ons-col width="95px">
+              <img ng-src="{{entry.thumbnail}}" class="thumbnail">
+            </ons-col>-->
+            <ons-col>
+              <div class="title">
+                {{entry.title}}
+              </div>
+              <div class="info">
+                {{entry.publicationDate}}<br>
+                {{entry.sitetitle}}
+              </div>
+            </ons-col>
+            <ons-col width="40px"></ons-col>
+          </ons-row>
+        </ons-list-item>
+
+      </ons-list>
+
+    </ons-page>
+
+</body>
+
+</html>
