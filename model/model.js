@@ -34,6 +34,10 @@ var Entries = new mongoose.Schema({
     sitetitle: {
         type: String,
         default: ""
+    },
+    description: {
+        type: String,
+        default: ""
     }
 });
 

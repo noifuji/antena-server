@@ -6,11 +6,16 @@ var FeedParser = require('feedparser');
 var http = require('http');
 var model = require('../model/model.js');
 var Entries = model.Entries;
+var url = require('url');
 
 module.exports = {
   index: function(request, response) {
+    
+    var url_parts = url.parse(request.url,true);
+    var query = url_parts.query;
+    console.log(query.time);
 
-  Entries.find({})
+  Entries.find({"publicationDate": {$gt: query.time}})
   .sort('-publicationDate')
   .skip(0)
   .limit(50)

@@ -51,7 +51,8 @@ new CronJob('0 0-45/15 * * * *', function() {
                                     'title': item.title,
                                     'url': item.link,
                                     'publicationDate': new Date(item.pubDate).getTime(),
-                                    'thumbnail': thumnail
+                                    'thumbnail': thumnail,
+                                    'description': item.description
                                 };
                                 entries.push(ep);
                             }
@@ -66,6 +67,7 @@ new CronJob('0 0-45/15 * * * *', function() {
                                 entry.publicationDate = entries[i].publicationDate;
                                 entry.thumbnail = entries[i].thumbnail;
                                 entry.sitetitle = feedMeta.title;
+                                entry.description = entries[i].description;
 
                                 var date = new Date(entries[i].publicationDate);
 
