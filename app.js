@@ -8,8 +8,7 @@ var express = require('express')
   , routes = require('./routes')
   , user = require('./routes/entry')
   , http = require('http')
-  , path = require('path')
-  , morgan = require('morgan');
+  , path = require('path');
 
 var app = express();
 
