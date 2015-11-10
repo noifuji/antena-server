@@ -38,6 +38,10 @@ var Entries = new mongoose.Schema({
     description: {
         type: String,
         default: ""
+    },
+    category: {
+        type: String,
+        default: ""
     }
 });
 

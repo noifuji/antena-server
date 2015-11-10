@@ -1,0 +1,63 @@
+<html>
+  <head>
+    <meta charset="UTF-8">
+
+
+    <script src="https://www.google.com/jsapi"
+        type="text/javascript"></script>
+    <script language="Javascript" type="text/javascript">
+    
+    google.load('search', '1');
+    
+    var searchControl;
+    
+    var num=1000;
+    var result = [];
+
+    function OnLoad() {
+      // Create a search control
+      search(("000"+num).slice(-4));
+    }
+	
+	function showResults(seachControl,searcher){
+        if (searcher.cursor == undefined) {
+            document.getElementById("resultcount").innerHTML = 0;
+        } else {
+            result.push(("000"+num).slice(-4) + "," + searcher.cursor.estimatedResultCount + "<br>");
+            document.getElementById("resultcount").innerHTML = num + "/10000";
+            //console.log(("000"+num).slice(-4) + "," + searcher.cursor.estimatedResultCount);
+            num = num + 1;
+            if(num < 2000) {
+            search(("000"+num).slice(-4));
+            }
+            else {
+                var s;
+                for (var i = 0; i < 2000; i ++) {
+                    s = s + result[i];
+                }
+                document.getElementById("resultcount").innerHTML = s;
+            }
+        }
+    }
+    
+    function search(word) {
+      searchControl = new google.search.SearchControl();
+      searchControl.addSearcher(new google.search.WebSearch());
+      searchControl.setSearchCompleteCallback(searchControl,showResults);
+      searchControl.setNoResultsString("ヒットしませんでした");
+      searchControl.draw(document.getElementById("searchcontrol"));
+      searchControl.execute(word);
+    }
+	
+	
+    google.setOnLoadCallback(OnLoad);
+
+    </script>
+  </head>
+  <body>
+	
+	<div id="resultcount"></div>
+	
+	<div id="percentage"></div>
+  </body>
+</html>

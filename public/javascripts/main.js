@@ -6,7 +6,7 @@ antena.controller('MainController', ['$scope', '$http', function($scope, $http) 
     $scope.entries = [];
 
     var config = {};
-    $http.get("https://antena-noifuji.c9.io/entry", config)
+    $http.get("https://antena-noifuji.c9.io/entry?time=0", config)
         .success(function(data, status, headers, config) {
             for(var i = 0; i < data.entries.length; i++) {
                 data.entries[i].publicationDate = toLocaleString(new Date(data.entries[i].publicationDate));

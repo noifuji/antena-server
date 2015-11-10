@@ -1,0 +1,36 @@
+<html>
+
+<head>
+  <meta charset="UTF-8">
+
+
+  <script src="https://www.google.com/jsapi" type="text/javascript"></script>
+  <script src="./javascripts/jquery-1.11.3.min.js" type="text/javascript"></script>
+  <script language="Javascript" type="text/javascript">
+    function btn() {
+      // Create a search control
+      test(0).done(function(result) {
+        console.log(result);
+      }).fail(function(result) {
+        console.log(result);
+      });
+    }
+
+
+    function test(page) {
+      return $.ajax({
+        type: 'GET',
+        url: 'https://www.googleapis.com/customsearch/v1?q=%E5%BD%A1(%EF%BE%9F)(%EF%BE%9F)&key=AIzaSyDDgYaIYetAHiJIoF_egwBJwGFSQgw29VI&cx=012899707549630466038:yk-cuwortg4'
+      })
+    }
+  </script>
+</head>
+
+<body>
+
+  <button id="resultcount" onClick="btn()"></button>
+
+  <div id="percentage"></div>
+</body>
+
+</html>
