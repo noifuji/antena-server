@@ -6,39 +6,102 @@ var Entries = model.Entries;
 var CronJob = require('cron').CronJob;
 var urlList = [
     //ニュース
-    {url:'http://himasoku.com/index.rdf', category:"news"},
-    {url:"http://news.2chblog.jp/index.rdf", category:"news"},
-    {url:"http://blog.livedoor.jp/itsoku/index.rdf", category:"news"},
-    {url:"http://blog.livedoor.jp/funs/index.rdf", category:"news"},
-    {url:"http://worldrankingup.blog41.fc2.com/?xml", category:"news"},
-    {url:"http://news4wide.livedoor.biz/index.rdf", category:"news"},
-    {url:'http://alfalfalfa.com/index.rdf', category:"news"},
-    {url:"http://blog.livedoor.jp/nwknews/index.rdf", category:"news"},
+    {
+        url: 'http://himasoku.com/index.rdf',
+        category: "news"
+    }, {
+        url: "http://news.2chblog.jp/index.rdf",
+        category: "news"
+    }, {
+        url: "http://blog.livedoor.jp/itsoku/index.rdf",
+        category: "news"
+    }, {
+        url: "http://blog.livedoor.jp/funs/index.rdf",
+        category: "news"
+    }, {
+        url: "http://worldrankingup.blog41.fc2.com/?xml",
+        category: "news"
+    }, {
+        url: "http://news4wide.livedoor.biz/index.rdf",
+        category: "news"
+    }, {
+        url: 'http://alfalfalfa.com/index.rdf',
+        category: "news"
+    }, {
+        url: "http://blog.livedoor.jp/nwknews/index.rdf",
+        category: "news"
+    },
     //金融
-    {url:'http://kabooo.net/index.rdf', category:"money"},
-   {url: "http://www.fx2ch.net/feed", category:"money"},
-   {url: "http://fxnetmatome.blog.fc2.com/?xml", category:"money"},
-  {url:  "http://usdjpy-fxyosou.blog.jp/index.rdf", category:"money"},
-   {url: "http://okanehadaiji.com/index.rdf", category:"money"},
+    {
+        url: 'http://kabooo.net/index.rdf',
+        category: "money"
+    }, {
+        url: "http://www.fx2ch.net/feed",
+        category: "money"
+    }, {
+        url: "http://fxnetmatome.blog.fc2.com/?xml",
+        category: "money"
+    }, {
+        url: "http://usdjpy-fxyosou.blog.jp/index.rdf",
+        category: "money"
+    }, {
+        url: "http://okanehadaiji.com/index.rdf",
+        category: "money"
+    },
     //VIP
-   {url: "http://blog.livedoor.jp/news23vip/index.rdf", category:"vip"},
-   {url: "http://vippers.jp/index.rdf", category:"vip"},
-   {url: "http://brow2ing.doorblog.jp/index.rdf", category:"vip"},
-   {url: "http://hamusoku.com/index.rdf", category:"vip"},
-   {url: "http://blog.livedoor.jp/goldennews/index.rdf", category:"vip"},
-   {url: "http://katuru2ch.blog12.fc2.com/?xml", category:"vip"},
-   {url: "http://blog.livedoor.jp/kinisoku/index.rdf", category:"vip"},
-   {url: "http://blog.livedoor.jp/nonvip/index.rdf", category:"vip"},
+    {
+        url: "http://blog.livedoor.jp/news23vip/index.rdf",
+        category: "vip"
+    }, {
+        url: "http://vippers.jp/index.rdf",
+        category: "vip"
+    }, {
+        url: "http://brow2ing.doorblog.jp/index.rdf",
+        category: "vip"
+    }, {
+        url: "http://hamusoku.com/index.rdf",
+        category: "vip"
+    }, {
+        url: "http://blog.livedoor.jp/goldennews/index.rdf",
+        category: "vip"
+    }, {
+        url: "http://katuru2ch.blog12.fc2.com/?xml",
+        category: "vip"
+    }, {
+        url: "http://blog.livedoor.jp/kinisoku/index.rdf",
+        category: "vip"
+    }, {
+        url: "http://blog.livedoor.jp/nonvip/index.rdf",
+        category: "vip"
+    },
     //スポーツ
-   {url: "http://blog.livedoor.jp/rock1963roll/index.rdf", category:"sports"},
-   {url: "http://football-2ch.com/index.rdf", category:"sports"},
-   {url: "http://blog.livedoor.jp/yakiusoku/index.rdf", category:"sports"},
-   {url: "http://blog.livedoor.jp/news4vip2/index.rdf", category:"sports"},
+    {
+        url: "http://blog.livedoor.jp/rock1963roll/index.rdf",
+        category: "sports"
+    }, {
+        url: "http://football-2ch.com/index.rdf",
+        category: "sports"
+    }, {
+        url: "http://blog.livedoor.jp/yakiusoku/index.rdf",
+        category: "sports"
+    }, {
+        url: "http://blog.livedoor.jp/news4vip2/index.rdf",
+        category: "sports"
+    },
     //鬼女
-    {url:"http://kosonews.blog135.fc2.com/?xml", category:"kijo"},
-    {url:"http://kosodatech.blog133.fc2.com/?xml", category:"kijo"},
-   {url: "http://kijosoku.com/index.rdf", category:"kijo"},
-    {url:"http://www.kitimama-matome.net/index.rdf" ,category:"kijo"}
+    {
+        url: "http://kosonews.blog135.fc2.com/?xml",
+        category: "kijo"
+    }, {
+        url: "http://kosodatech.blog133.fc2.com/?xml",
+        category: "kijo"
+    }, {
+        url: "http://kijosoku.com/index.rdf",
+        category: "kijo"
+    }, {
+        url: "http://www.kitimama-matome.net/index.rdf",
+        category: "kijo"
+    }
 ];
 new CronJob('0 0-50/10 * * * *', function() {
     //過去のエントリーを検索し最新の日時のものより新しい記事を取得する。
@@ -118,6 +181,8 @@ new CronJob('0 0-50/10 * * * *', function() {
                             }
 
                         });
+                }).on('error', function(e) {
+                    console.log("Got error: " + e.message);
                 });
             })(j);
         }
