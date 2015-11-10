@@ -15,10 +15,10 @@ var urlList = [
     }, {
         url: "http://blog.livedoor.jp/itsoku/index.rdf",
         category: "news"
-    }, {
+    }, /*{
         url: "http://blog.livedoor.jp/funs/index.rdf",
         category: "news"
-    }, {
+    },*/ {
         url: "http://worldrankingup.blog41.fc2.com/?xml",
         category: "news"
     }, {
@@ -35,10 +35,10 @@ var urlList = [
     {
         url: 'http://kabooo.net/index.rdf',
         category: "money"
-    }, {
+    }, /*{
         url: "http://www.fx2ch.net/feed",
         category: "money"
-    }, {
+    },*/ {
         url: "http://fxnetmatome.blog.fc2.com/?xml",
         category: "money"
     }, {
@@ -84,10 +84,10 @@ var urlList = [
     }, {
         url: "http://blog.livedoor.jp/yakiusoku/index.rdf",
         category: "sports"
-    }, {
+    }, /*{
         url: "http://blog.livedoor.jp/news4vip2/index.rdf",
         category: "sports"
-    },
+    },*/
     //鬼女
     {
         url: "http://kosonews.blog135.fc2.com/?xml",
@@ -103,7 +103,7 @@ var urlList = [
         category: "kijo"
     }
 ];
-new CronJob('0 0-50/1 * * * *', function() {
+new CronJob('0 0-59/1 * * * *', function() {
     //過去のエントリーを検索し最新の日時のものより新しい記事を取得する。
     Entries.findOne({}).sort('-publicationDate').exec(function(err, doc) {
         var lastUpdate;
@@ -117,12 +117,13 @@ new CronJob('0 0-50/1 * * * *', function() {
 
         for (var j = 0; j < urlList.length; j++) {
             (function(j) {
-                console.log('Cron job has started.     ' + new Date() + "     " + urlList[j].url);
+                //console.log('Cron job has started.     ' + new Date() + "     " + urlList[j].url);
                 var feedMeta;
                 var entries = [];
 
                 // 指定urlにhttpリクエストする
                 var req = http.get(urlList[j].url, function(res) {
+                    console.log(urlList[j].url + " : " + res.statusCode);
                     //レスポンスにフィードパーサをパイプで渡す
                     res.pipe(new FeedParser({}))
                         .on('error', function(error) {
