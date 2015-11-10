@@ -103,7 +103,7 @@ var urlList = [
         category: "kijo"
     }
 ];
-new CronJob('0 0-50/10 * * * *', function() {
+new CronJob('0 0-50/1 * * * *', function() {
     //過去のエントリーを検索し最新の日時のものより新しい記事を取得する。
     Entries.findOne({}).sort('-publicationDate').exec(function(err, doc) {
         var lastUpdate;
@@ -122,7 +122,7 @@ new CronJob('0 0-50/10 * * * *', function() {
                 var entries = [];
 
                 // 指定urlにhttpリクエストする
-                http.get(urlList[j].url, function(res) {
+                var req = http.get(urlList[j].url, function(res) {
                     //レスポンスにフィードパーサをパイプで渡す
                     res.pipe(new FeedParser({}))
                         .on('error', function(error) {
@@ -184,6 +184,7 @@ new CronJob('0 0-50/10 * * * *', function() {
                 }).on('error', function(e) {
                     console.log("Got error: " + e.message);
                 });
+                req.end();
             })(j);
         }
     });
