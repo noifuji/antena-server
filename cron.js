@@ -38,9 +38,9 @@ var urlList = [
     {url:"http://kosonews.blog135.fc2.com/?xml", category:"kijo"},
     {url:"http://kosodatech.blog133.fc2.com/?xml", category:"kijo"},
    {url: "http://kijosoku.com/index.rdf", category:"kijo"},
-    {url:"http://www.kitimama-matome.net/index.rdf" ,category:"kijo"},
+    {url:"http://www.kitimama-matome.net/index.rdf" ,category:"kijo"}
 ];
-new CronJob('0 0-50/10 * * * *', function() {
+new CronJob('0 0-50/1 * * * *', function() {
     //過去のエントリーを検索し最新の日時のものより新しい記事を取得する。
     Entries.findOne({}).sort('-publicationDate').exec(function(err, doc) {
         var lastUpdate;
@@ -108,7 +108,7 @@ new CronJob('0 0-50/10 * * * *', function() {
                                 var date = new Date(entries[i].publicationDate);
 
                                 if (date > lastUpdate) {
-                                    console.log(entry);
+                                    console.log(entry.title);
                                     entry.save(function(err) {
                                         if (err) {
                                             console.log(err);

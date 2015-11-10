@@ -20,9 +20,9 @@
       <ons-toolbar>
         <div class="center">Entry List</div>
       </ons-toolbar>
-
+      <div ng-bind-html="content"></div>
       <ons-list>
-        <ons-list-item ng-repeat='entry in entries' modifier="chevron" class="list-item-container" ng-click="movetoEntry($index)">
+        <ons-list-item ng-repeat='entry in entries' modifier="tappable" class="list-item-container" ng-click="movetoEntry($index)">
           <ons-row>
             <ons-col width="95px">
               <img ng-src="{{entry.thumbnail}}" class="thumbnail">
@@ -36,7 +36,6 @@
                 {{entry.sitetitle}}
               </div>
             </ons-col>
-            <ons-col width="40px"></ons-col>
           </ons-row>
         </ons-list-item>
 

@@ -1,6 +1,6 @@
-var antena = ons.bootstrap('antena', ['onsen']);
+var antena = ons.bootstrap('antena', ['onsen'],['ngSanitize']);
 
-antena.controller('MainController', ['$scope', '$http', function($scope, $http) {
+antena.controller('MainController', ['$scope', '$http', '$sce', function($scope, $http, $sce) {
     console.log("MainController");
 
     $scope.entries = [];
@@ -19,7 +19,15 @@ antena.controller('MainController', ['$scope', '$http', function($scope, $http) 
         });
 
     $scope.movetoEntry = function(index) {
-        window.open($scope.entries[index].url);
+        //window.open($scope.entries[index].url);
+        $http.get("https://antena-noifuji.c9.io/description?id="+$scope.entries[index]._id, config)
+        .success(function(data, status, headers, config) {
+            console.log(data.entry.description);
+            $scope.content = $sce.trustAsHtml(data.entry.description);
+        })
+        .error(function(data, status, headers, config) {
+            console.log(data);
+        });
     }
 }]);
 
