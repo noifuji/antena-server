@@ -9,6 +9,8 @@ var express = require('express')
   , user = require('./routes/entry')
   , http = require('http')
   , path = require('path');
+var fs = require('fs');
+var url = require('url');
 
 var app = express();
 
@@ -31,7 +33,21 @@ if ('development' == app.get('env')) {
 
 //app.get('/users', user.list);
 app.resource('entry', require('./routes/entry'));
+app.resource('past', require('./routes/past'));
 app.resource('description', require('./routes/description'));
+
+app.get('/thumbnail', function(req, res){
+    var url_parts = url.parse(req.url, true);
+    var query = url_parts.query;
+    console.log(query.name);
+    try{
+    var buf = fs.readFileSync('./thumbnail/' + query.name + '.png');
+    res.send(buf, { 'Content-Type': 'image/jpeg' }, 200);
+    } catch (err) {
+      console.log(err);
+      res.send("", { 'Content-Type': 'image/jpeg' }, 500);
+    }
+});
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));

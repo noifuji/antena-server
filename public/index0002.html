@@ -20,8 +20,8 @@
       <ons-toolbar>
         <div class="center">Entry List</div>
       </ons-toolbar>
-      <div ng-bind-html="content"></div>
       <ons-list>
+      <div ng-bind-html="content" id="summary"></div>
         <ons-list-item ng-repeat='entry in entries' modifier="tappable" class="list-item-container" ng-click="movetoEntry($index)">
           <ons-row>
             <ons-col width="95px">
@@ -37,6 +37,7 @@
               </div>
             </ons-col>
           </ons-row>
+          
         </ons-list-item>
 
       </ons-list>

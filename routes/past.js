@@ -19,17 +19,13 @@ module.exports = {
       console.log("true");
       Entries.find({
           "publicationDate": {
-            $gt: query.time
+            $lt: query.time
           }
         })
         .sort('-publicationDate')
         .skip(0)
-        .limit(1000)
+        .limit(50)
         .exec(function(err, docs) {
-          //docsの軽量化
-          for(var i = 0; i < docs.length; i++) {
-            docs[i].description = "";
-          }
           var result;
           result = {
             'message': "OK",
@@ -43,18 +39,14 @@ module.exports = {
 
       Entries.find({
           "publicationDate": {
-            $gt: query.time
+            $lt: query.time
           },
           "category": query.category
         })
         .sort('-publicationDate')
         .skip(0)
-        .limit(1000)
+        .limit(50)
         .exec(function(err, docs) {
-          //docsの軽量化
-          for(var i = 0; i < docs.length; i++) {
-            docs[i].description = "";
-          }
           var result;
           result = {
             'message': "OK",

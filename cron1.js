@@ -111,14 +111,6 @@ var urlList = [
 new CronJob('0 0-59/1 * * * *', function() {
     //過去のエントリーを検索し最新の日時のものより新しい記事を取得する。
     Entries.findOne({}).sort('-publicationDate').exec(function(err, doc) {
-        var lastUpdate;
-
-        if (doc == null) {
-            lastUpdate = 0;
-        }
-        else {
-            lastUpdate = new Date(doc.publicationDate);
-        }
 
         var feedMeta;
         var entries = [];
@@ -130,7 +122,8 @@ new CronJob('0 0-59/1 * * * *', function() {
 
             function execRequest(idx) {
                 url = urls[idx].url;
-                console.log("executing execRequest()... url:", url);
+                var now = new Date();
+                console.log(now + ": executing execRequest()... url:", url);
                 // exec http request
                 http.get(url, function(response) {
                     if (response.statusCode == 200) {
@@ -170,26 +163,30 @@ new CronJob('0 0-59/1 * * * *', function() {
                             .on('end', function() {
                                 // データ保存完了後、jsonに整形する
                                 for (var i = 0; i < entries.length; i++) {
+                                    (function(j, jdx) {
                                     var entry = new Entries();
-                                    entry.title = entries[i].title;
-                                    entry.url = entries[i].url;
+                                    entry.title = entries[j].title;
+                                    entry.url = entries[j].url;
                                     //              entry.summary = entries[i].summary;
-                                    entry.publicationDate = entries[i].publicationDate;
-                                    entry.thumbnail = entries[i].thumbnail;
+                                    entry.publicationDate = entries[j].publicationDate;
+                                    entry.thumbnail = entries[j].thumbnail;
                                     entry.sitetitle = feedMeta.title;
-                                    entry.description = entries[i].description;
-                                    entry.category = urlList[idx].category;
+                                    entry.description = entries[j].description;
+                                    entry.category = urlList[jdx].category;
 
-                                    var date = new Date(entries[i].publicationDate);
-
-                                    if (date > lastUpdate) {
-                                        console.log(entry.title);
-                                        entry.save(function(err) {
-                                            if (err) {
-                                                console.log(err);
-                                            }
-                                        });
-                                    }
+                                    Entries.find({
+                                        url: entries[j].url
+                                    }, function(err, docs) {
+                                        if (docs.length == 0) {
+                                            console.log(entry.title);
+                                            entry.save(function(err) {
+                                                if (err) {
+                                                    console.log(err);
+                                                }
+                                            });
+                                        }
+                                    });
+                                    })(i, idx);
                                 }
                                 entries = [];
 
@@ -208,6 +205,15 @@ new CronJob('0 0-59/1 * * * *', function() {
                             });
                     }
 
+                }).on('error', function(e) {
+                    console.log("Got error: " + e.message + "\nstack:" + e.stack + "\nline:" + e.lineNumber);
+                    if (idx + 1 < length) {
+                                    console.log("  execute execRequest() after 100ms...");
+                                    // execute the recursive function "execRequest()" after 1000 ms
+                                    setTimeout(function() {
+                                        execRequest(idx + 1)
+                                    }, 100);
+                                }
                 });
             }
 
