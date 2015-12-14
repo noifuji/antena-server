@@ -169,15 +169,15 @@ new CronJob('0 0-59/10 * * * *', function() {
                     })
                     .on('end', function() {
                         //console.log(feedMeta.title + " has " + entries.length + " entries.");
-                        async.each(entries, function(entry, entryCallback) {
-/*                            var entry = new Entries();
+                        async.each(entries, function(e, entryCallback) {
+                            var entry = new Entries();
                             entry.title = e.title;
                             entry.url = e.url;
                             entry.publicationDate = e.publicationDate;
                             entry.thumbnail = e.thumbnail;
                             entry.sitetitle = feedMeta.title;
                             entry.description = e.description;
-                            entry.category = url.category;*/
+                            entry.category = url.category;
 
                             Entries.find({
                                 url: entry.url
