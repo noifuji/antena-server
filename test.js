@@ -108,49 +108,53 @@ var urlList = [
     }
 ];
 
-var counter = 0;
+new CronJob('0,20,40 * * * * *', function() {
 
-async.forEach(urlList, function(url, callback) {
+    var counter = 0;
 
-    var req = request({
-        method: 'GET',
-        url: url.url,
-        encoding: null
-    });
-    var feedparser = new FeedParser();
+    async.eachSeries(urlList, function(url, callback) {
 
-    req.on('error', function(error) {
-        // handle any request errors
-    });
-    req.on('response', function(res) {
-        var stream = this;
+        var req = request({
+            method: 'GET',
+            url: url.url,
+            encoding: null
+        });
+        var feedparser = new FeedParser();
 
-        if (res.statusCode != 200) return this.emit('error', new Error('Bad status code'));
+        req.on('error', function(error) {
+            console.log(error);
+        });
+        req.on('response', function(res) {
+            var stream = this;
 
-        stream.pipe(feedparser);
-    });
+            if (res.statusCode != 200) return this.emit('error', new Error('Bad status code'));
 
-    feedparser.on('error', function(error) {
-        // always handle errors
-    });
-    feedparser.on('readable', function() {
-        // This is where the action is!
-        var stream = this,
-            meta = this.meta // **NOTE** the "meta" is always available in the context of the feedparser instance
-            ,
-            item;
-            
-            console.log(meta.title);
-            
+            stream.pipe(feedparser);
+        });
+
+        feedparser.on('error', function(error) {
+            // always handle errors
+        });
+        feedparser.on('readable', function() {
+            // This is where the action is!
+            var stream = this,
+                meta = this.meta // **NOTE** the "meta" is always available in the context of the feedparser instance
+                ,
+                item;
+
+            //console.log(meta.link);
+
             counter++;
             callback(null, null);
+        });
+
+
+    }, function(err, results) {
+        if (err) {
+            console.log("error occured");
+            throw err;
+        }
+        console.log('each all done. ' + counter);
     });
 
-
-}, function(err, results) {
-    if (err) {
-        console.log("error occured");
-        throw err;
-    }
-    console.log('each all done. ' + counter);
-});
+}, null, true, "Japan");
