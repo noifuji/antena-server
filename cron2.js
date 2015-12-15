@@ -120,7 +120,7 @@ var urlList = [
 //　　1エントリごとにデータの重複チェック　　→async.each化?
 //　　　データの保存
 
-new CronJob('0 0-59/10 * * * *', function() {
+new CronJob('0 0-59/1 * * * *', function() {
 
     async.each(urlList, function(url, callback) {
 
