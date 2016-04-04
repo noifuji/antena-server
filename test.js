@@ -112,7 +112,7 @@ var urlList = [
     }
 ];
 
-var job = new CronJob('0/1 * * * * *', function() {
+var job = new CronJob('0 0-59/10 * * * *', function() {
 
     console.log(new Date());
 

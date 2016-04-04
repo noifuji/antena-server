@@ -20,6 +20,9 @@ var urlList = [
     }, {
         url: "http://blog.livedoor.jp/itsoku/index.rdf",
         category: "news"
+    },{
+        url: "http://blog.livedoor.jp/dqnplus/index.rdf",
+        category: "news"
     },
     /*{
             url: "http://blog.livedoor.jp/funs/index.rdf",
@@ -73,10 +76,10 @@ var urlList = [
     }, {
         url: "http://blog.livedoor.jp/goldennews/index.rdf",
         category: "vip"
-    }, {
+    }/*, {
         url: "http://katuru2ch.blog12.fc2.com/?xml",
         category: "vip"
-    }, {
+    }*/, {
         url: "http://blog.livedoor.jp/kinisoku/index.rdf",
         category: "vip"
     }, {
@@ -120,7 +123,7 @@ var urlList = [
 //　　1エントリごとにデータの重複チェック　　→async.each化?
 //　　　データの保存
 
-new CronJob('0 0-59/1 * * * *', function() {
+new CronJob('0 0-59/10 * * * *', function() {
 
     async.each(urlList, function(url, callback) {
 
@@ -260,6 +263,8 @@ new CronJob('0 0-59/1 * * * *', function() {
             console.log('timeout!! :' + url.url);
             callback(null, null);
         });
+        
+        getRequest.end();
 
 
     }, function(err, results) {
