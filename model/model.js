@@ -45,4 +45,11 @@ var Entries = new mongoose.Schema({
     }
 });
 
+var RssUrls = new mongoose.Schema({
+    sitetitle: String,
+    url:String,
+    category:String
+});
+
 exports.Entries = db.model('Entries', Entries);
+exports.RssUrls = db.model('RssUrls', RssUrls);

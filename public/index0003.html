@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet prefetch" href="bower_components/OnsenUI/build/css/onsenui.css">
+    <link rel="stylesheet prefetch" href="bower_components/OnsenUI/build/css/onsen-css-components.css">
+    
+    <link rel="stylesheet prefetch" href="./stylesheets/style3.css">
+
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/OnsenUI/build/js/onsenui.js"></script>
+    
+    <script src="./javascripts/main3.js"></script>
+
+</head>
+
+<body>
+    <ons-page ng-controller="MainController">
+      <ons-toolbar>
+        <div class="center">Antena Admin Page</div>
+      </ons-toolbar>
+      <h5>Site Title</h5>
+      <input class="text-input" id="input_sitetitle" ng-model="sitetitle">
+      <h5>Rss Url</h5>
+      <input class="text-input" id="input_url" ng-model="url">
+      <ons-button modifier="large" ng-click="submit()">Submit</ons-button>
+      <ons-list>
+      <div ng-bind-html="content" id="summary"></div>
+        <ons-list-item ng-repeat='site in sites' modifier="tappable" class="list-item-container">
+          <ons-row>
+            <ons-col>
+              <div class="title">
+                {{site.sitetitle}}
+              </div>
+              <div class="info">
+                {{site.url}}
+              </div>
+            </ons-col>
+            <ons-col>
+              <ons-button modifier="large" ng-click="delete($index)">delete</ons-button>
+            </ons-col>
+          </ons-row>
+          
+        </ons-list-item>
+
+      </ons-list>
+
+    </ons-page>
+
+</body>
+
+</html>

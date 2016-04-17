@@ -1,0 +1,23 @@
+body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: #00B7FF;
+}
+
+.title{
+  letter-spacing: -1px;
+  line-height: normal;
+}
+.info {
+  
+  line-height: normal;
+}
+
+#summary img{
+  max-width: 100%;
+ height: auto;
+
+}

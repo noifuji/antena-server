@@ -2,6 +2,7 @@ var FeedParser = require('feedparser');
 var http = require('http');
 var model = require('./model/model.js');
 var Entries = model.Entries;
+var RssUrls = model.RssUrls;
 var async = require('async');
 var easyimg = require('easyimage');
 
@@ -123,9 +124,24 @@ var urlList = [
 //　　1エントリごとにデータの重複チェック　　→async.each化?
 //　　　データの保存
 
-new CronJob('0 0-59/10 * * * *', function() {
+new CronJob('0 0-59/1 * * * *', function() {
+    
+    var siteList = [];
+    
+    RssUrls.find()
+        .skip(0)
+        .limit(1000)
+        .exec(function(err, docs) {
+            for(var i = 0; i < docs.length; i ++) {
+                siteList[i] = {
+                  url :   docs[i].url,
+                  category : ""
+                };
+                
+            }
+        
 
-    async.each(urlList, function(url, callback) {
+    async.each(siteList, function(url, callback) {
 
 
 
@@ -171,6 +187,9 @@ new CronJob('0 0-59/10 * * * *', function() {
                         }
                     })
                     .on('end', function() {
+                        
+console.log("sockets:" + Object.getOwnPropertyNames(http.globalAgent.sockets).length);
+console.log("requests:" + Object.getOwnPropertyNames(http.globalAgent.requests).length);
                         //console.log(feedMeta.title + " has " + entries.length + " entries.");
                         async.each(entries, function(e, entryCallback) {
                             var entry = new Entries();
@@ -258,11 +277,12 @@ new CronJob('0 0-59/10 * * * *', function() {
             callback(null, null);
         });
 
-        getRequest.setTimeout(30000, function() {
-            // handle timeout here
-            console.log('timeout!! :' + url.url);
-            callback(null, null);
-        });
+        
+req.on('timeout', function() {
+  console.log('request timed out');
+  req.abort()
+});
+
         
         getRequest.end();
 
@@ -274,7 +294,7 @@ new CronJob('0 0-59/10 * * * *', function() {
         }
         console.log('each all done. ');
     });
-
+});
 
 }, null, true, "Japan");
 

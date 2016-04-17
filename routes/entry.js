@@ -36,6 +36,7 @@ module.exports = {
             'category': query.category,
             'entries': docs
           };
+    response.setHeader('Access-Control-Allow-Origin', 'https://antena-noifuji-1.c9.io');
           response.json(result);
         });
     }

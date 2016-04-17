@@ -35,6 +35,7 @@ if ('development' == app.get('env')) {
 app.resource('entry', require('./routes/entry'));
 app.resource('past', require('./routes/past'));
 app.resource('description', require('./routes/description'));
+app.resource('rss', require('./routes/rss'));
 
 app.get('/thumbnail', function(req, res){
     var url_parts = url.parse(req.url, true);
@@ -47,6 +48,13 @@ app.get('/thumbnail', function(req, res){
       console.log(err);
       res.send("", { 'Content-Type': 'image/jpeg' }, 500);
     }
+});
+
+app.options('*', function (req, res) {
+  res.header('Access-Control-Allow-Origin', 'https://antena-noifuji-1.c9.io');
+  res.header('Access-Control-Allow-Methods', 'POST, GET, PUT, DELETE, OPTIONS');
+  res.header('Access-Control-Allow-Headers', "X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept");
+  res.send("ok", 200);
 });
 
 http.createServer(app).listen(app.get('port'), function(){
