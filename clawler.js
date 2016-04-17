@@ -9,7 +9,7 @@ var model = require('./model/model.js');
 var Entries = model.Entries;
 var RssUrls = model.RssUrls;
 
-new CronJob('0 0-59/5 * * * *', function() {
+new CronJob('0 0-59/10 * * * *', function() {
     var siteList = [];
 
     RssUrls.find()
