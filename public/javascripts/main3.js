@@ -13,7 +13,7 @@ antena.controller('MainController', ['$scope', '$http', '$sce', function($scope,
     $scope.submit = function() {
         $http({
         method: 'POST',
-        url: "https://antena-noifuji.c9.io/rss",
+        url: document.location.origin+"/rss",
         data: { sitetitle: $scope.sitetitle,
                 url      : $scope.url}
       })
@@ -27,7 +27,7 @@ antena.controller('MainController', ['$scope', '$http', '$sce', function($scope,
     }
     
     $scope.delete = function(index) {
-        $http.delete("https://antena-noifuji.c9.io/rss/" + $scope.sites[index]._id, config)
+        $http.delete(document.location.origin+"/rss/" + $scope.sites[index]._id, config)
         .success(function(data, status, headers, config) {
             console.log(data);
             getAllSites();
@@ -39,7 +39,7 @@ antena.controller('MainController', ['$scope', '$http', '$sce', function($scope,
     
     function getAllSites()
     {
-    $http.get("https://antena-noifuji.c9.io/rss", config)
+    $http.get(document.location.origin+"/rss", config)
         .success(function(data, status, headers, config) {
             console.log(data);
             $scope.sites = data.sites;
