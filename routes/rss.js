@@ -22,53 +22,58 @@ module.exports = {
             'message': "OK",
             'sites': docs
           };
-          response.setHeader('Access-Control-Allow-Origin', 'https://antena-noifuji-1.c9.io');
+          response.setHeader('Access-Control-Allow-Origin', request.protocol + '://' + request.headers.host);
           response.json(result);
         });
     }
-  }
-  ,new: function(request, response){
-    response.setHeader('Access-Control-Allow-Origin', 'https://antena-noifuji-1.c9.io');
+  },
+  new: function(request, response) {
+    response.setHeader('Access-Control-Allow-Origin', request.protocol + '://' + request.headers.host);
     response.send("new: called as GET method");
-  }
-  ,create: function(request, response){
+  },
+  create: function(request, response) {
     console.log(request.body.sitetitle);
     var rss = new RssUrls();
-      rss.sitetitle = request.body.sitetitle;
-      rss.url = request.body.url;
-      rss.save(function(err) {
-        var result;
-          result = {
-            'message': "OK"
-          };
-          response.setHeader('Access-Control-Allow-Origin', 'https://antena-noifuji-1.c9.io');
-          response.json(result);
-      });
-      
-        }
-  ,show: function(request, response){
-    response.setHeader('Access-Control-Allow-Origin', 'https://antena-noifuji-1.c9.io');
+    rss.sitetitle = request.body.sitetitle;
+    rss.url = request.body.url;
+    rss.save(function(err) {
+      var result;
+      result = {
+        'message': "OK"
+      };
+      response.setHeader('Access-Control-Allow-Origin', request.protocol + '://' + request.headers.host);
+      response.json(result);
+    });
+
+  },
+  show: function(request, response) {
+    response.setHeader('Access-Control-Allow-Origin', request.protocol + '://' + request.headers.host);
     response.send("show: called as GET method");
-  }
-  ,edit: function(request, response){
-    response.setHeader('Access-Control-Allow-Origin', 'https://antena-noifuji-1.c9.io');
+  },
+  edit: function(request, response) {
+    response.setHeader('Access-Control-Allow-Origin', request.protocol + '://' + request.headers.host);
     response.send("edit: called as GET method");
-  }
-  ,update: function(request, response){
-    response.setHeader('Access-Control-Allow-Origin', 'https://antena-noifuji-1.c9.io');
+  },
+  update: function(request, response) {
+    response.setHeader('Access-Control-Allow-Origin', request.protocol + '://' + request.headers.host);
     response.send("update: called as PUT method");
-  }
-  ,destroy:function(request, response){
+  },
+  destroy: function(request, response) {
     console.log(request.params.rs);
-        RssUrls.remove({ _id: request.params.rs }, function(err) {
-        
-          var result;
-          result = {
-            'message': "OK"
-          };
-    response.setHeader('Access-Control-Allow-Origin', 'https://antena-noifuji-1.c9.io');
-    response.json(result);
-});
-    
+    RssUrls.remove({
+      _id: request.params.rs
+    }, function(err) {
+      if (err) {
+        throw err;
+      }
+
+      var result;
+      result = {
+        'message': "OK"
+      };
+      response.setHeader('Access-Control-Allow-Origin', request.protocol + '://' + request.headers.host);
+      response.json(result);
+    });
+
   }
 };

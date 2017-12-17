@@ -36,6 +36,7 @@ app.resource('entry', require('./routes/entry'));
 app.resource('past', require('./routes/past'));
 app.resource('description', require('./routes/description'));
 app.resource('rss', require('./routes/rss'));
+app.resource('v2/entry', require('./routes/v2/entry'));
 
 app.get('/thumbnail', function(req, res){
     var url_parts = url.parse(req.url, true);
@@ -51,7 +52,7 @@ app.get('/thumbnail', function(req, res){
 });
 
 app.options('*', function (req, res) {
-  res.header('Access-Control-Allow-Origin', 'https://antena-noifuji-1.c9.io');
+  res.header('Access-Control-Allow-Origin', req.protocol + '://' + req.headers.host);
   res.header('Access-Control-Allow-Methods', 'POST, GET, PUT, DELETE, OPTIONS');
   res.header('Access-Control-Allow-Headers', "X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept");
   res.send("ok", 200);

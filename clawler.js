@@ -62,6 +62,8 @@ new CronJob('0 0-59/10 * * * *', function() {
                             });
                             parser.on('meta', function(meta) {
                                 feedMeta = meta;
+                                //console.log(Object.getOwnPropertyNames( feedMeta.link ));
+                                //console.log(feedMeta.link );
                             });
                             parser.on('readable', function() {
                                 var stream = this;

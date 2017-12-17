@@ -1,9 +1,5 @@
 'use strict';
 
-var express = require('express');
-var router = express.Router();
-var FeedParser = require('feedparser');
-var http = require('http');
 var model = require('../model/model.js');
 var Entries = model.Entries;
 var url = require('url');
@@ -24,10 +20,10 @@ module.exports = {
         })
         .sort('-publicationDate')
         .skip(0)
-        .limit(1000)
+        .limit(20)
         .exec(function(err, docs) {
           //docsの軽量化
-          for(var i = 0; i < docs.length; i++) {
+          for (var i = 0; i < docs.length; i++) {
             docs[i].description = "";
           }
           var result;
@@ -36,7 +32,7 @@ module.exports = {
             'category': query.category,
             'entries': docs
           };
-    response.setHeader('Access-Control-Allow-Origin', 'https://antena-noifuji-1.c9.io');
+          response.setHeader('Access-Control-Allow-Origin', request.protocol + '://' + request.headers.host);
           response.json(result);
         });
     }
@@ -53,7 +49,7 @@ module.exports = {
         .limit(1000)
         .exec(function(err, docs) {
           //docsの軽量化
-          for(var i = 0; i < docs.length; i++) {
+          for (var i = 0; i < docs.length; i++) {
             docs[i].description = "";
           }
           var result;
