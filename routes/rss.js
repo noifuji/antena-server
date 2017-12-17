@@ -22,13 +22,13 @@ module.exports = {
             'message': "OK",
             'sites': docs
           };
-          response.setHeader('Access-Control-Allow-Origin', request.protocol + '://' + request.headers.host);
+          response.setHeader('Access-Control-Allow-Origin', "*");
           response.json(result);
         });
     }
   },
   new: function(request, response) {
-    response.setHeader('Access-Control-Allow-Origin', request.protocol + '://' + request.headers.host);
+    response.setHeader('Access-Control-Allow-Origin', "*");
     response.send("new: called as GET method");
   },
   create: function(request, response) {
@@ -41,21 +41,21 @@ module.exports = {
       result = {
         'message': "OK"
       };
-      response.setHeader('Access-Control-Allow-Origin', request.protocol + '://' + request.headers.host);
+      response.setHeader('Access-Control-Allow-Origin', "*");
       response.json(result);
     });
 
   },
   show: function(request, response) {
-    response.setHeader('Access-Control-Allow-Origin', request.protocol + '://' + request.headers.host);
+    response.setHeader('Access-Control-Allow-Origin', "*");
     response.send("show: called as GET method");
   },
   edit: function(request, response) {
-    response.setHeader('Access-Control-Allow-Origin', request.protocol + '://' + request.headers.host);
+    response.setHeader('Access-Control-Allow-Origin', "*");
     response.send("edit: called as GET method");
   },
   update: function(request, response) {
-    response.setHeader('Access-Control-Allow-Origin', request.protocol + '://' + request.headers.host);
+    response.setHeader('Access-Control-Allow-Origin', "*");
     response.send("update: called as PUT method");
   },
   destroy: function(request, response) {
@@ -71,7 +71,7 @@ module.exports = {
       result = {
         'message': "OK"
       };
-      response.setHeader('Access-Control-Allow-Origin', request.protocol + '://' + request.headers.host);
+      response.setHeader('Access-Control-Allow-Origin', "*");
       response.json(result);
     });
 
