@@ -20,7 +20,7 @@ module.exports = {
         })
         .sort('-publicationDate')
         .skip(0)
-        .limit(20)
+        .limit(40)
         .exec(function(err, docs) {
           //docsの軽量化
           for (var i = 0; i < docs.length; i++) {
@@ -32,7 +32,8 @@ module.exports = {
             'category': query.category,
             'entries': docs
           };
-          response.setHeader('Access-Control-Allow-Origin', request.protocol + '://' + request.headers.host);
+          //response.setHeader('Access-Control-Allow-Origin', request.protocol + '://' + request.headers.host);
+          response.setHeader('Access-Control-Allow-Origin', "*");
           response.json(result);
         });
     }

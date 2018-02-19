@@ -9,8 +9,9 @@ var model = require('./model/model.js');
 var Entries = model.Entries;
 var RssUrls = model.RssUrls;
 
-new CronJob('0 0-59/10 * * * *', function() {
+new CronJob('0 0-59/15 * * * *', function() {
     var siteList = [];
+    console.log("start crawling:" + new Date);
 
     RssUrls.find()
         .skip(0)
@@ -98,6 +99,9 @@ new CronJob('0 0-59/10 * * * *', function() {
                                 }
                             });
                             parser.on('end', function() {
+                                if(entries.length > 0) {
+                                    console.log("site("+entries.length+"):"+entries[0].sitetitle)
+                                }
                                 callback(null, entries);
                             });
 
@@ -307,7 +311,7 @@ new CronJob('0 0-59/10 * * * *', function() {
                         console.log(err);
                     }
                     else {
-                        console.log("all done");
+                        console.log("end   crawling:" + new Date);
                     }
                 });
 

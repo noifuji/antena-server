@@ -34,6 +34,7 @@ module.exports = {
                         'message': "Error"
                     };
                 }
+                response.setHeader('Access-Control-Allow-Origin', "*");
                 response.json(result);
             });
     }
